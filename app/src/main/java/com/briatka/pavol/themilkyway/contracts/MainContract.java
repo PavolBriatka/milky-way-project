@@ -4,7 +4,7 @@ import com.briatka.pavol.themilkyway.model.CollectionData;
 
 public interface MainContract {
 
-    
+
     interface AccessData {
 
         interface OnFinishedListener{
