@@ -4,6 +4,15 @@ import com.briatka.pavol.themilkyway.model.CollectionData;
 
 public interface MainContract {
 
+    interface View {
+        void setDataToAdapter(CollectionData collectionData);
+        void onRequestFailed(Throwable throwable);
+    }
+
+    interface Presenter {
+
+        void requestDataFromNetwork();
+    }
 
     interface AccessData {
 
