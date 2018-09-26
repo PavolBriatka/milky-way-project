@@ -1,9 +1,9 @@
-package com.briatka.pavol.themilkyway.presenter;
+package com.briatka.pavol.themilkyway.presenters;
 
 import com.briatka.pavol.themilkyway.contracts.MainContract;
-import com.briatka.pavol.themilkyway.model.CollectionData;
+import com.briatka.pavol.themilkyway.models.jsonobjects.CollectionData;
 
-public class MainPresenter implements MainContract.Presenter, MainContract.AccessData.OnFinishedListener {
+public class MainPresenter implements MainContract.MainPresenter, MainContract.AccessData.OnFinishedListener {
 
     private MainContract.AccessData accessData;
     private MainContract.View view;
@@ -16,6 +16,7 @@ public class MainPresenter implements MainContract.Presenter, MainContract.Acces
 
     @Override
     public void requestDataFromNetwork() {
+
         accessData.getCollectionData(this);
     }
 

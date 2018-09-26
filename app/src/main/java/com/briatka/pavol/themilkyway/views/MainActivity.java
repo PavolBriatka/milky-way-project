@@ -1,20 +1,20 @@
-package com.briatka.pavol.themilkyway;
+package com.briatka.pavol.themilkyway.views;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.widget.Toast;
 
+import com.briatka.pavol.themilkyway.R;
 import com.briatka.pavol.themilkyway.adapters.NasaDataAdapter;
 import com.briatka.pavol.themilkyway.contracts.MainContract;
-import com.briatka.pavol.themilkyway.model.CollectionData;
-import com.briatka.pavol.themilkyway.model.CollectionItem;
-import com.briatka.pavol.themilkyway.model.ImageLinkObject;
-import com.briatka.pavol.themilkyway.model.RequestData;
-import com.briatka.pavol.themilkyway.model.UiDataObject;
-import com.briatka.pavol.themilkyway.presenter.MainPresenter;
+import com.briatka.pavol.themilkyway.models.customobjects.NasaObject;
+import com.briatka.pavol.themilkyway.models.data.RequestData;
+import com.briatka.pavol.themilkyway.models.jsonobjects.CollectionData;
+import com.briatka.pavol.themilkyway.models.jsonobjects.CollectionItem;
+import com.briatka.pavol.themilkyway.presenters.MainPresenter;
 
 import java.util.List;
 
@@ -23,11 +23,24 @@ import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity implements MainContract.View {
 
-    private MainContract.Presenter presenter;
+    public static final String NASA_OBJECT_KEY = "nasa_object_key";
+    private MainContract.MainPresenter mainPresenter;
     private NasaDataAdapter adapter;
+
 
     @BindView(R.id.main_recycler_view)
     RecyclerView recyclerView;
+
+    public class OnItemClickedListener implements NasaDataAdapter.OnItemClickedListener {
+
+        @Override
+        public void onItemClicked(NasaObject nasaObject) {
+
+            Intent openDetailActivity = new Intent(MainActivity.this,DetailActivity.class);
+            openDetailActivity.putExtra(NASA_OBJECT_KEY, nasaObject);
+            startActivity(openDetailActivity);
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,28 +50,17 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
 
         initializeRecyclerView();
 
-        presenter = new MainPresenter(new RequestData(),this);
-        presenter.requestDataFromNetwork();
+        mainPresenter = new MainPresenter(new RequestData(),this);
+        mainPresenter.requestDataFromNetwork();
     }
 
-    public class OnItemClickedListener implements NasaDataAdapter.OnItemClickedListener {
 
-        @Override
-        public void onItemClicked(UiDataObject uiDataObject, ImageLinkObject imageLinkObject) {
-            String title = uiDataObject.getTitle();
-            String link = imageLinkObject.getImageUrl();
-            Log.e("title",title);
-            Log.e("url",link);
-        }
-    }
 
     private void initializeRecyclerView(){
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(MainActivity.this);
         recyclerView.setLayoutManager(layoutManager);
         adapter = new NasaDataAdapter(null, new OnItemClickedListener());
         recyclerView.setAdapter(adapter);
-
-
     }
 
 

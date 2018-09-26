@@ -1,6 +1,6 @@
 package com.briatka.pavol.themilkyway.clients;
 
-import com.briatka.pavol.themilkyway.model.RootCollectionObject;
+import com.briatka.pavol.themilkyway.models.jsonobjects.RootCollectionObject;
 
 import retrofit2.Call;
 import retrofit2.http.GET;

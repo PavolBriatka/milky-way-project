@@ -1,6 +1,9 @@
 package com.briatka.pavol.themilkyway.contracts;
 
-import com.briatka.pavol.themilkyway.model.CollectionData;
+import android.content.Intent;
+
+import com.briatka.pavol.themilkyway.models.customobjects.NasaObject;
+import com.briatka.pavol.themilkyway.models.jsonobjects.CollectionData;
 
 public interface MainContract {
 
@@ -9,9 +12,19 @@ public interface MainContract {
         void onRequestFailed(Throwable throwable);
     }
 
-    interface Presenter {
+    interface MainPresenter {
 
         void requestDataFromNetwork();
+    }
+
+    interface DetailPresenter {
+
+        void loadDataFromIntentExtras(Intent intent);
+    }
+
+    interface DetailView {
+
+        void updateUi(NasaObject nasaObject);
     }
 
     interface AccessData {

@@ -1,7 +1,8 @@
-package com.briatka.pavol.themilkyway.model;
+package com.briatka.pavol.themilkyway.models.data;
 
 import com.briatka.pavol.themilkyway.clients.NasaDataClient;
 import com.briatka.pavol.themilkyway.contracts.MainContract;
+import com.briatka.pavol.themilkyway.models.jsonobjects.RootCollectionObject;
 import com.briatka.pavol.themilkyway.retrofit.RetrofitInstance;
 
 import retrofit2.Call;

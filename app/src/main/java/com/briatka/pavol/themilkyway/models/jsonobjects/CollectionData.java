@@ -1,4 +1,4 @@
-package com.briatka.pavol.themilkyway.model;
+package com.briatka.pavol.themilkyway.models.jsonobjects;
 
 import com.google.gson.annotations.SerializedName;
 

@@ -9,9 +9,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.briatka.pavol.themilkyway.R;
-import com.briatka.pavol.themilkyway.model.CollectionItem;
-import com.briatka.pavol.themilkyway.model.ImageLinkObject;
-import com.briatka.pavol.themilkyway.model.UiDataObject;
+import com.briatka.pavol.themilkyway.models.customobjects.NasaObject;
+import com.briatka.pavol.themilkyway.models.jsonobjects.CollectionItem;
+import com.briatka.pavol.themilkyway.models.jsonobjects.ImageLinkObject;
+import com.briatka.pavol.themilkyway.models.jsonobjects.UiDataObject;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -26,7 +27,7 @@ public class NasaDataAdapter extends RecyclerView.Adapter<NasaDataAdapter.ViewHo
     private OnItemClickedListener onItemClickedListener;
 
     public interface OnItemClickedListener {
-        void onItemClicked(UiDataObject uiDataObject, ImageLinkObject imageLinkObject);
+        void onItemClicked(NasaObject nasaObject);
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
@@ -83,7 +84,14 @@ public class NasaDataAdapter extends RecyclerView.Adapter<NasaDataAdapter.ViewHo
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                onItemClickedListener.onItemClicked(uiDataObject,imageLinkObject);
+
+                NasaObject nasaObject = new NasaObject(uiDataObject.getTitle(),
+                        uiDataObject.getCenter(),
+                        uiDataObject.getDateCreated(),
+                        uiDataObject.getDescription(),
+                        imageLinkObject.getImageUrl());
+
+                onItemClickedListener.onItemClicked(nasaObject);
             }
         });
 
