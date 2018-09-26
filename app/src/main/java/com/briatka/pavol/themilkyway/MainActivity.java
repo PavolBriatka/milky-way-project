@@ -4,13 +4,16 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.briatka.pavol.themilkyway.adapters.NasaDataAdapter;
 import com.briatka.pavol.themilkyway.contracts.MainContract;
 import com.briatka.pavol.themilkyway.model.CollectionData;
 import com.briatka.pavol.themilkyway.model.CollectionItem;
+import com.briatka.pavol.themilkyway.model.ImageLinkObject;
 import com.briatka.pavol.themilkyway.model.RequestData;
+import com.briatka.pavol.themilkyway.model.UiDataObject;
 import com.briatka.pavol.themilkyway.presenter.MainPresenter;
 
 import java.util.List;
@@ -38,10 +41,21 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
         presenter.requestDataFromNetwork();
     }
 
+    public class OnItemClickedListener implements NasaDataAdapter.OnItemClickedListener {
+
+        @Override
+        public void onItemClicked(UiDataObject uiDataObject, ImageLinkObject imageLinkObject) {
+            String title = uiDataObject.getTitle();
+            String link = imageLinkObject.getImageUrl();
+            Log.e("title",title);
+            Log.e("url",link);
+        }
+    }
+
     private void initializeRecyclerView(){
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(MainActivity.this);
         recyclerView.setLayoutManager(layoutManager);
-        adapter = new NasaDataAdapter(null);
+        adapter = new NasaDataAdapter(null, new OnItemClickedListener());
         recyclerView.setAdapter(adapter);
 
 

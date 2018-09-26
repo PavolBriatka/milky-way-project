@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.briatka.pavol.themilkyway.R;
 import com.briatka.pavol.themilkyway.model.CollectionItem;
+import com.briatka.pavol.themilkyway.model.ImageLinkObject;
 import com.briatka.pavol.themilkyway.model.UiDataObject;
 import com.squareup.picasso.Picasso;
 
@@ -22,6 +23,11 @@ public class NasaDataAdapter extends RecyclerView.Adapter<NasaDataAdapter.ViewHo
 
     private List<CollectionItem> dataList;
     private final static String DIVIDER = " | ";
+    private OnItemClickedListener onItemClickedListener;
+
+    public interface OnItemClickedListener {
+        void onItemClicked(UiDataObject uiDataObject, ImageLinkObject imageLinkObject);
+    }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
 
@@ -41,8 +47,9 @@ public class NasaDataAdapter extends RecyclerView.Adapter<NasaDataAdapter.ViewHo
         }
     }
 
-    public NasaDataAdapter(List<CollectionItem> list){
+    public NasaDataAdapter(List<CollectionItem> list, OnItemClickedListener listener){
         this.dataList = list;
+        this.onItemClickedListener = listener;
     }
 
     @NonNull
@@ -55,9 +62,10 @@ public class NasaDataAdapter extends RecyclerView.Adapter<NasaDataAdapter.ViewHo
     @Override
     public void onBindViewHolder(@NonNull NasaDataAdapter.ViewHolder viewHolder, int position) {
 
-        CollectionItem currentItem = dataList.get(position);
-        if(currentItem.getUiDataObjectList().size()==1){
-            UiDataObject uiDataObject = currentItem.getUiDataObjectList().get(0);
+        final CollectionItem currentItem = dataList.get(position);
+        final UiDataObject uiDataObject = currentItem.getUiDataObjectList().get(0);
+        final ImageLinkObject imageLinkObject = currentItem.getImageLinkList().get(0);
+
             String itemTitle = uiDataObject.getTitle();
             String itemCenter = uiDataObject.getCenter() + DIVIDER;
             String itemDate = truncateDateString(uiDataObject.getDateCreated());
@@ -66,12 +74,18 @@ public class NasaDataAdapter extends RecyclerView.Adapter<NasaDataAdapter.ViewHo
             viewHolder.center.setText(itemCenter);
             viewHolder.date.setText(itemDate);
 
-        }
-        if(currentItem.getImageLinkList().size()==1){
-            String imgUrl = currentItem.getImageLinkList().get(0).getImageUrl();
+
+            String imgUrl = imageLinkObject.getImageUrl();
             Picasso.get().load(imgUrl).into(viewHolder.itemImage);
 
-        }
+
+
+        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onItemClickedListener.onItemClicked(uiDataObject,imageLinkObject);
+            }
+        });
 
 
     }
