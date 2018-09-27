@@ -29,8 +29,13 @@ public class DetailActivity extends AppCompatActivity implements MainContract.De
     ImageView detailImage;
     @BindView(R.id.detail_title)
     TextView detailTitle;
+    @BindView(R.id.detail_center)
+    TextView detailCenter;
+    @BindView(R.id.detail_date)
+    TextView detailDate;
     @BindView(R.id.detail_description)
     TextView detailDescription;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,10 +61,15 @@ public class DetailActivity extends AppCompatActivity implements MainContract.De
     public void updateUi(NasaObject nasaObject) {
         String imgUrl = nasaObject.getImgUrl();
         String title = nasaObject.getTitle();
+        String center = nasaObject.getCenter();
+        String date = nasaObject.getDate();
         String description = nasaObject.getDescription();
+
 
         Picasso.get().load(imgUrl).into(detailImage);
         detailTitle.setText(title);
+        detailCenter.setText(Html.fromHtml(getString(R.string.detail_center, center)));
+        detailDate.setText(Html.fromHtml(getString(R.string.detail_date,date)));
         detailDescription.setMovementMethod(LinkMovementMethod.getInstance());
         detailDescription.setText(Html.fromHtml(description));
     }

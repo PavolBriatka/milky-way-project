@@ -24,6 +24,7 @@ public class MainPresenter implements MainContract.MainPresenter, MainContract.A
     public void onSuccessfulResponse(CollectionData collectionData) {
         if(view != null){
             view.setDataToAdapter(collectionData);
+            view.hideProgressBar();
         }
     }
 
@@ -31,6 +32,7 @@ public class MainPresenter implements MainContract.MainPresenter, MainContract.A
     public void onRequestFailed(Throwable throwable) {
         if(view != null) {
             view.onRequestFailed(throwable);
+            view.hideProgressBar();
         }
 
     }

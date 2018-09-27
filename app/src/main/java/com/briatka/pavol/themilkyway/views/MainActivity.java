@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.briatka.pavol.themilkyway.R;
@@ -30,6 +32,8 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
 
     @BindView(R.id.main_recycler_view)
     RecyclerView recyclerView;
+    @BindView(R.id.progress_bar)
+    ProgressBar progressBar;
 
     public class OnItemClickedListener implements NasaDataAdapter.OnItemClickedListener {
 
@@ -76,5 +80,10 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
         Toast.makeText(this,
                 getString(R.string.error_message) + throwable.getMessage(),
                 Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void hideProgressBar() {
+        progressBar.setVisibility(View.GONE);
     }
 }

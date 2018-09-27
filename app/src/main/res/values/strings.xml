@@ -2,4 +2,8 @@
     <string name="app_name">The Milky Way</string>
     <string name="error_message">Oops, something went wrong. Error:</string>
     <string name="item_image_content_description">List item image</string>
+    <string name="detail_center"><![CDATA[<b>Center:</b> %1$s]]></string>
+    <string name="detail_date"><![CDATA[<b>Date:</b> %1$s]]></string>
+    <string name="up_image_content_description">Action up</string>
+    <string name="detail_image_content_description">Detail Image</string>
 </resources>

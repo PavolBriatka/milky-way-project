@@ -87,7 +87,7 @@ public class NasaDataAdapter extends RecyclerView.Adapter<NasaDataAdapter.ViewHo
 
                 NasaObject nasaObject = new NasaObject(uiDataObject.getTitle(),
                         uiDataObject.getCenter(),
-                        uiDataObject.getDateCreated(),
+                        truncateDateString(uiDataObject.getDateCreated()),
                         uiDataObject.getDescription(),
                         imageLinkObject.getImageUrl());
 

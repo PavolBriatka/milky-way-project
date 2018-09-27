@@ -10,6 +10,7 @@ public interface MainContract {
     interface View {
         void setDataToAdapter(CollectionData collectionData);
         void onRequestFailed(Throwable throwable);
+        void hideProgressBar();
     }
 
     interface MainPresenter {

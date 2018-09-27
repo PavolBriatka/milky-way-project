@@ -4,4 +4,8 @@
     <dimen name="basic_margin">8dp</dimen>
     <dimen name="large_margin">16dp</dimen>
 
+    <dimen name="fixed_image_height">250dp</dimen>
+    <dimen name="detail_headline_text_size">20sp</dimen>
+    <dimen name="detail_text_size">16sp</dimen>
+    <dimen name="list_item_headline_text_size">18sp</dimen>
 </resources>
