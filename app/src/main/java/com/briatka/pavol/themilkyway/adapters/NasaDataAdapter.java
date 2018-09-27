@@ -37,6 +37,8 @@ public class NasaDataAdapter extends RecyclerView.Adapter<NasaDataAdapter.ViewHo
         TextView date;
         @BindView(R.id.item_image)
         ImageView itemImage;
+        @BindView(R.id.list_item_gradient)
+        View gradientView;
 
         public ViewHolder(View view){
             super(view);
@@ -67,13 +69,18 @@ public class NasaDataAdapter extends RecyclerView.Adapter<NasaDataAdapter.ViewHo
             String itemCenter = currentItem.getCenter() + DIVIDER;
             String itemDate = truncateDateString(currentItem.getDate());
 
+            viewHolder.gradientView.setVisibility(View.VISIBLE);
             viewHolder.title.setText(itemTitle);
             viewHolder.center.setText(itemCenter);
             viewHolder.date.setText(itemDate);
 
 
             String imgUrl = currentItem.getImgUrl();
-            Picasso.get().load(imgUrl).into(viewHolder.itemImage);
+            Picasso.get()
+                    .load(imgUrl)
+                    .placeholder(R.drawable.ic_image_grey)
+                    .error(R.drawable.ic_broken_image_grey)
+                    .into(viewHolder.itemImage);
 
 
 

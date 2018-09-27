@@ -48,7 +48,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="@color/mainTextColor"
-                android:textSize="@dimen/list_item_headline_text_size"
+                android:textSize="@dimen/list_item_landscape_headline_text_size"
                 android:textStyle="bold"
                 tools:text="Main Title" />
 

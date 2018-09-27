@@ -1,8 +1,10 @@
 package com.briatka.pavol.themilkyway.views;
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -30,6 +32,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
     private MainContract.MainPresenter mainPresenter;
     private NasaDataAdapter adapter;
     private ArrayList<NasaObject> nasaObjectList;
+    private RecyclerView.LayoutManager layoutManager;
 
 
     @BindView(R.id.main_recycler_view)
@@ -42,7 +45,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
         @Override
         public void onItemClicked(NasaObject nasaObject) {
 
-            Intent openDetailActivity = new Intent(MainActivity.this,DetailActivity.class);
+            Intent openDetailActivity = new Intent(MainActivity.this, DetailActivity.class);
             openDetailActivity.putExtra(NASA_OBJECT_KEY, nasaObject);
             startActivity(openDetailActivity);
         }
@@ -54,13 +57,13 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
-        if(savedInstanceState != null) {
+        if (savedInstanceState != null) {
             ArrayList<NasaObject> nasaObjectArrayList = savedInstanceState.getParcelableArrayList(SAVED_ARRAY_KEY);
             nasaObjectList = nasaObjectArrayList;
             initializeRecyclerView(nasaObjectArrayList);
         } else {
             initializeRecyclerView(null);
-            mainPresenter = new MainPresenter(new RequestData(),this);
+            mainPresenter = new MainPresenter(new RequestData(), this);
             mainPresenter.requestDataFromNetwork();
         }
 
@@ -68,9 +71,14 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
     }
 
 
+    private void initializeRecyclerView(ArrayList<NasaObject> list) {
+        int orientation = this.getResources().getConfiguration().orientation;
+        if (orientation == Configuration.ORIENTATION_PORTRAIT) {
+            layoutManager = new LinearLayoutManager(MainActivity.this);
+        } else {
+            layoutManager = new GridLayoutManager(MainActivity.this, 2);
+        }
 
-    private void initializeRecyclerView(ArrayList<NasaObject> list){
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(MainActivity.this);
         recyclerView.setLayoutManager(layoutManager);
         adapter = new NasaDataAdapter(list, new OnItemClickedListener());
         recyclerView.setAdapter(adapter);
