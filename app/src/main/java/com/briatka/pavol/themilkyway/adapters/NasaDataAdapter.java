@@ -27,7 +27,7 @@ public class NasaDataAdapter extends RecyclerView.Adapter<NasaDataAdapter.ViewHo
         void onItemClicked(NasaObject nasaObject);
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    public class ViewHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.title)
         TextView title;
@@ -40,14 +40,14 @@ public class NasaDataAdapter extends RecyclerView.Adapter<NasaDataAdapter.ViewHo
         @BindView(R.id.list_item_gradient)
         View gradientView;
 
-        public ViewHolder(View view){
+        public ViewHolder(View view) {
             super(view);
-            ButterKnife.bind(this,view);
+            ButterKnife.bind(this, view);
 
         }
     }
 
-    public NasaDataAdapter(ArrayList<NasaObject> list, OnItemClickedListener listener){
+    public NasaDataAdapter(ArrayList<NasaObject> list, OnItemClickedListener listener) {
         this.dataList = list;
         this.onItemClickedListener = listener;
     }
@@ -56,7 +56,7 @@ public class NasaDataAdapter extends RecyclerView.Adapter<NasaDataAdapter.ViewHo
     @Override
     public NasaDataAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int i) {
         return new ViewHolder(LayoutInflater.from(parent.getContext())
-        .inflate(R.layout.list_item, parent, false));
+                .inflate(R.layout.list_item, parent, false));
     }
 
     @Override
@@ -65,22 +65,21 @@ public class NasaDataAdapter extends RecyclerView.Adapter<NasaDataAdapter.ViewHo
         final NasaObject currentItem = dataList.get(position);
 
 
-            String itemTitle = currentItem.getTitle();
-            String itemCenter = currentItem.getCenter() + DIVIDER;
-            String itemDate = truncateDateString(currentItem.getDate());
+        String itemTitle = currentItem.getTitle();
+        String itemCenter = currentItem.getCenter() + DIVIDER;
+        String itemDate = truncateDateString(currentItem.getDate());
 
-            viewHolder.gradientView.setVisibility(View.VISIBLE);
-            viewHolder.title.setText(itemTitle);
-            viewHolder.center.setText(itemCenter);
-            viewHolder.date.setText(itemDate);
+        viewHolder.gradientView.setVisibility(View.VISIBLE);
+        viewHolder.title.setText(itemTitle);
+        viewHolder.center.setText(itemCenter);
+        viewHolder.date.setText(itemDate);
 
 
-            String imgUrl = currentItem.getImgUrl();
-            Picasso.get()
-                    .load(imgUrl)
-                    .error(R.drawable.ic_broken_image_grey)
-                    .into(viewHolder.itemImage);
-
+        String imgUrl = currentItem.getImgUrl();
+        Picasso.get()
+                .load(imgUrl)
+                .error(R.drawable.ic_broken_image_grey)
+                .into(viewHolder.itemImage);
 
 
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -99,13 +98,13 @@ public class NasaDataAdapter extends RecyclerView.Adapter<NasaDataAdapter.ViewHo
         return (dataList == null) ? 0 : dataList.size();
     }
 
-    public void setData(ArrayList<NasaObject> passedData){
+    public void setData(ArrayList<NasaObject> passedData) {
         this.dataList = passedData;
         notifyDataSetChanged();
     }
 
-    private String truncateDateString(String rawText){
-        rawText = rawText.substring(0,10);
+    private String truncateDateString(String rawText) {
+        rawText = rawText.substring(0, 10);
         return rawText;
     }
 }

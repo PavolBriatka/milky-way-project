@@ -10,7 +10,7 @@ public class DetailPresenter implements MainContract.DetailPresenter {
 
     private MainContract.DetailView detailView;
 
-    public DetailPresenter(MainContract.DetailView detailView){
+    public DetailPresenter(MainContract.DetailView detailView) {
         this.detailView = detailView;
     }
 

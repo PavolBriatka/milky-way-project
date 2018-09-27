@@ -30,12 +30,12 @@ public class MainPresenter implements MainContract.MainPresenter, MainContract.A
     @Override
     public void convertToNasaObjectList(ArrayList<CollectionItem> list) {
         ArrayList<NasaObject> nasaObjectList = new ArrayList<>();
-        for(int i = 0; i < list.size(); i++) {
+        for (int i = 0; i < list.size(); i++) {
             CollectionItem item = list.get(i);
             UiDataObject uiDataObject = item.getUiDataObjectList().get(0);
             ImageLinkObject imageLinkObject = item.getImageLinkList().get(0);
 
-            if(uiDataObject != null && imageLinkObject != null) {
+            if (uiDataObject != null && imageLinkObject != null) {
 
                 nasaObjectList.add(new NasaObject(uiDataObject.getTitle(),
                         uiDataObject.getCenter(),
@@ -49,7 +49,7 @@ public class MainPresenter implements MainContract.MainPresenter, MainContract.A
 
     @Override
     public void onSuccessfulResponse(CollectionData collectionData) {
-        if(view != null){
+        if (view != null) {
             view.setDataToAdapter(collectionData);
             view.hideProgressBar();
         }
@@ -57,7 +57,7 @@ public class MainPresenter implements MainContract.MainPresenter, MainContract.A
 
     @Override
     public void onRequestFailed(Throwable throwable) {
-        if(view != null) {
+        if (view != null) {
             view.onRequestFailed(throwable);
             view.hideProgressBar();
         }

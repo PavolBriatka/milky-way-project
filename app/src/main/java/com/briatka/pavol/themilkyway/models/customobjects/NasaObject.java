@@ -60,7 +60,7 @@ public class NasaObject implements Parcelable {
         this.imgUrl = imgUrl;
     }
 
-    private NasaObject (Parcel parcel){
+    private NasaObject(Parcel parcel) {
         title = parcel.readString();
         center = parcel.readString();
         date = parcel.readString();

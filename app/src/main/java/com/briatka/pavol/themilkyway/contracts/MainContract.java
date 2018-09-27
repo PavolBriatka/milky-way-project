@@ -12,14 +12,19 @@ public interface MainContract {
 
     interface View {
         void setDataToAdapter(CollectionData collectionData);
+
         void onRequestFailed(Throwable throwable);
+
         void showProgressBar();
+
         void hideProgressBar();
+
         void initiateNasaObjectList(ArrayList<NasaObject> list);
     }
 
     interface MainPresenter {
         void requestDataFromNetwork();
+
         void convertToNasaObjectList(ArrayList<CollectionItem> list);
     }
 
@@ -33,8 +38,9 @@ public interface MainContract {
 
     interface AccessData {
 
-        interface OnFinishedListener{
+        interface OnFinishedListener {
             void onSuccessfulResponse(CollectionData collectionData);
+
             void onRequestFailed(Throwable throwable);
         }
 

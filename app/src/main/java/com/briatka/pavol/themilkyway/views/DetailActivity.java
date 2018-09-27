@@ -52,7 +52,7 @@ public class DetailActivity extends AppCompatActivity implements MainContract.De
             }
         });
 
-        if(savedInstanceState != null){
+        if (savedInstanceState != null) {
             NasaObject savedObject = savedInstanceState.getParcelable(SAVED_OBJECT_KEY);
             updateUi(savedObject);
         } else {
@@ -60,7 +60,6 @@ public class DetailActivity extends AppCompatActivity implements MainContract.De
             detailPresenter = new DetailPresenter(this);
             detailPresenter.loadDataFromIntentExtras(intent);
         }
-
 
 
     }
@@ -77,7 +76,7 @@ public class DetailActivity extends AppCompatActivity implements MainContract.De
         Picasso.get().load(imgUrl).into(detailImage);
         detailTitle.setText(title);
         detailCenter.setText(Html.fromHtml(getString(R.string.detail_center, center)));
-        detailDate.setText(Html.fromHtml(getString(R.string.detail_date,date)));
+        detailDate.setText(Html.fromHtml(getString(R.string.detail_date, date)));
         detailDescription.setMovementMethod(LinkMovementMethod.getInstance());
         detailDescription.setText(Html.fromHtml(description));
     }
@@ -85,6 +84,6 @@ public class DetailActivity extends AppCompatActivity implements MainContract.De
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putParcelable(SAVED_OBJECT_KEY,nasaObjectData);
+        outState.putParcelable(SAVED_OBJECT_KEY, nasaObjectData);
     }
 }
