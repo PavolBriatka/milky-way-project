@@ -64,13 +64,18 @@ public class DetailActivity extends AppCompatActivity implements MainContract.De
 
     }
 
+    private String truncateDateString(String rawText) {
+        rawText = rawText.substring(0, 10);
+        return rawText;
+    }
+
     @Override
     public void updateUi(NasaObject nasaObject) {
         nasaObjectData = nasaObject;
         String imgUrl = nasaObject.getImgUrl();
         String title = nasaObject.getTitle();
         String center = nasaObject.getCenter();
-        String date = nasaObject.getDate();
+        String date = truncateDateString(nasaObject.getDate());
         String description = nasaObject.getDescription();
 
         Picasso.get().load(imgUrl).into(detailImage);
