@@ -78,7 +78,6 @@ public class NasaDataAdapter extends RecyclerView.Adapter<NasaDataAdapter.ViewHo
             String imgUrl = currentItem.getImgUrl();
             Picasso.get()
                     .load(imgUrl)
-                    .placeholder(R.drawable.ic_image_grey)
                     .error(R.drawable.ic_broken_image_grey)
                     .into(viewHolder.itemImage);
 

@@ -4,11 +4,15 @@ import com.briatka.pavol.themilkyway.models.jsonobjects.RootCollectionObject;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
+import retrofit2.http.Query;
 
 public interface NasaDataClient {
 
-    @GET("/search?q=milky%20way&media_type=image&year_start=2017&year_end=2017")
-    Call<RootCollectionObject> getNasaData();
+    @GET("/search")
+    Call<RootCollectionObject> getNasaData(@Query("q") String q,
+                                           @Query("media_type") String media_type,
+                                           @Query("year_start") String year_start,
+                                           @Query("year_end") String year_end);
 
 
 }

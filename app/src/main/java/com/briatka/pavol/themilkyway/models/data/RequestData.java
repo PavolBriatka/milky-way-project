@@ -11,11 +11,16 @@ import retrofit2.Response;
 
 public class RequestData implements MainContract.AccessData {
 
+    private static String q = "milky way";
+    private static String media_type = "image";
+    private static String year_start = "2017";
+    private static String year_end = "2017";
+
     @Override
     public void getCollectionData(final OnFinishedListener onFinishedListener) {
 
         NasaDataClient client = RetrofitInstance.getRetrofitInstance().create(NasaDataClient.class);
-        Call<RootCollectionObject> call = client.getNasaData();
+        Call<RootCollectionObject> call = client.getNasaData(q, media_type, year_start, year_end);
 
         call.enqueue(new Callback<RootCollectionObject>() {
             @Override
