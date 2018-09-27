@@ -21,7 +21,9 @@ import butterknife.ButterKnife;
 
 public class DetailActivity extends AppCompatActivity implements MainContract.DetailView {
 
+    private static final String SAVED_OBJECT_KEY = "saved_object";
     private MainContract.DetailPresenter detailPresenter;
+    private NasaObject nasaObjectData;
 
     @BindView(R.id.action_up)
     ImageButton actionUpButton;
@@ -50,21 +52,27 @@ public class DetailActivity extends AppCompatActivity implements MainContract.De
             }
         });
 
-        Intent intent = getIntent();
+        if(savedInstanceState != null){
+            NasaObject savedObject = savedInstanceState.getParcelable(SAVED_OBJECT_KEY);
+            updateUi(savedObject);
+        } else {
+            Intent intent = getIntent();
+            detailPresenter = new DetailPresenter(this);
+            detailPresenter.loadDataFromIntentExtras(intent);
+        }
 
-        detailPresenter = new DetailPresenter(this);
-        detailPresenter.loadDataFromIntentExtras(intent);
+
 
     }
 
     @Override
     public void updateUi(NasaObject nasaObject) {
+        nasaObjectData = nasaObject;
         String imgUrl = nasaObject.getImgUrl();
         String title = nasaObject.getTitle();
         String center = nasaObject.getCenter();
         String date = nasaObject.getDate();
         String description = nasaObject.getDescription();
-
 
         Picasso.get().load(imgUrl).into(detailImage);
         detailTitle.setText(title);
@@ -72,5 +80,11 @@ public class DetailActivity extends AppCompatActivity implements MainContract.De
         detailDate.setText(Html.fromHtml(getString(R.string.detail_date,date)));
         detailDescription.setMovementMethod(LinkMovementMethod.getInstance());
         detailDescription.setText(Html.fromHtml(description));
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putParcelable(SAVED_OBJECT_KEY,nasaObjectData);
     }
 }

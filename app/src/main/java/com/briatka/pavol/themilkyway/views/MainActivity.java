@@ -18,7 +18,7 @@ import com.briatka.pavol.themilkyway.models.jsonobjects.CollectionData;
 import com.briatka.pavol.themilkyway.models.jsonobjects.CollectionItem;
 import com.briatka.pavol.themilkyway.presenters.MainPresenter;
 
-import java.util.List;
+import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -26,8 +26,10 @@ import butterknife.ButterKnife;
 public class MainActivity extends AppCompatActivity implements MainContract.View {
 
     public static final String NASA_OBJECT_KEY = "nasa_object_key";
+    private static final String SAVED_ARRAY_KEY = "saved_array";
     private MainContract.MainPresenter mainPresenter;
     private NasaDataAdapter adapter;
+    private ArrayList<NasaObject> nasaObjectList;
 
 
     @BindView(R.id.main_recycler_view)
@@ -52,27 +54,36 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
-        initializeRecyclerView();
+        if(savedInstanceState != null) {
+            ArrayList<NasaObject> nasaObjectArrayList = savedInstanceState.getParcelableArrayList(SAVED_ARRAY_KEY);
+            nasaObjectList = nasaObjectArrayList;
+            initializeRecyclerView(nasaObjectArrayList);
+        } else {
+            initializeRecyclerView(null);
+            mainPresenter = new MainPresenter(new RequestData(),this);
+            mainPresenter.requestDataFromNetwork();
+        }
 
-        mainPresenter = new MainPresenter(new RequestData(),this);
-        mainPresenter.requestDataFromNetwork();
+
     }
 
 
 
-    private void initializeRecyclerView(){
+    private void initializeRecyclerView(ArrayList<NasaObject> list){
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(MainActivity.this);
         recyclerView.setLayoutManager(layoutManager);
-        adapter = new NasaDataAdapter(null, new OnItemClickedListener());
+        adapter = new NasaDataAdapter(list, new OnItemClickedListener());
         recyclerView.setAdapter(adapter);
     }
 
 
     @Override
     public void setDataToAdapter(CollectionData collectionData) {
-        List<CollectionItem> passedList = collectionData.getCollectionItemList();
-        adapter.setData(passedList);
+        ArrayList<CollectionItem> passedList = collectionData.getCollectionItemList();
+        mainPresenter.convertToNasaObjectList(passedList);
+        adapter.setData(nasaObjectList);
         recyclerView.setAdapter(adapter);
+
     }
 
     @Override
@@ -83,7 +94,25 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
     }
 
     @Override
+    public void showProgressBar() {
+        progressBar.setVisibility(View.VISIBLE);
+    }
+
+    @Override
     public void hideProgressBar() {
         progressBar.setVisibility(View.GONE);
     }
+
+    @Override
+    public void initiateNasaObjectList(ArrayList<NasaObject> list) {
+        nasaObjectList = list;
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putParcelableArrayList(SAVED_ARRAY_KEY, nasaObjectList);
+    }
 }
+
+

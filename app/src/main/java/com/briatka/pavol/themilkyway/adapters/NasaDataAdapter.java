@@ -10,19 +10,16 @@ import android.widget.TextView;
 
 import com.briatka.pavol.themilkyway.R;
 import com.briatka.pavol.themilkyway.models.customobjects.NasaObject;
-import com.briatka.pavol.themilkyway.models.jsonobjects.CollectionItem;
-import com.briatka.pavol.themilkyway.models.jsonobjects.ImageLinkObject;
-import com.briatka.pavol.themilkyway.models.jsonobjects.UiDataObject;
 import com.squareup.picasso.Picasso;
 
-import java.util.List;
+import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class NasaDataAdapter extends RecyclerView.Adapter<NasaDataAdapter.ViewHolder> {
 
-    private List<CollectionItem> dataList;
+    private ArrayList<NasaObject> dataList;
     private final static String DIVIDER = " | ";
     private OnItemClickedListener onItemClickedListener;
 
@@ -48,7 +45,7 @@ public class NasaDataAdapter extends RecyclerView.Adapter<NasaDataAdapter.ViewHo
         }
     }
 
-    public NasaDataAdapter(List<CollectionItem> list, OnItemClickedListener listener){
+    public NasaDataAdapter(ArrayList<NasaObject> list, OnItemClickedListener listener){
         this.dataList = list;
         this.onItemClickedListener = listener;
     }
@@ -63,20 +60,19 @@ public class NasaDataAdapter extends RecyclerView.Adapter<NasaDataAdapter.ViewHo
     @Override
     public void onBindViewHolder(@NonNull NasaDataAdapter.ViewHolder viewHolder, int position) {
 
-        final CollectionItem currentItem = dataList.get(position);
-        final UiDataObject uiDataObject = currentItem.getUiDataObjectList().get(0);
-        final ImageLinkObject imageLinkObject = currentItem.getImageLinkList().get(0);
+        final NasaObject currentItem = dataList.get(position);
 
-            String itemTitle = uiDataObject.getTitle();
-            String itemCenter = uiDataObject.getCenter() + DIVIDER;
-            String itemDate = truncateDateString(uiDataObject.getDateCreated());
+
+            String itemTitle = currentItem.getTitle();
+            String itemCenter = currentItem.getCenter() + DIVIDER;
+            String itemDate = truncateDateString(currentItem.getDate());
 
             viewHolder.title.setText(itemTitle);
             viewHolder.center.setText(itemCenter);
             viewHolder.date.setText(itemDate);
 
 
-            String imgUrl = imageLinkObject.getImageUrl();
+            String imgUrl = currentItem.getImgUrl();
             Picasso.get().load(imgUrl).into(viewHolder.itemImage);
 
 
@@ -85,13 +81,7 @@ public class NasaDataAdapter extends RecyclerView.Adapter<NasaDataAdapter.ViewHo
             @Override
             public void onClick(View view) {
 
-                NasaObject nasaObject = new NasaObject(uiDataObject.getTitle(),
-                        uiDataObject.getCenter(),
-                        truncateDateString(uiDataObject.getDateCreated()),
-                        uiDataObject.getDescription(),
-                        imageLinkObject.getImageUrl());
-
-                onItemClickedListener.onItemClicked(nasaObject);
+                onItemClickedListener.onItemClicked(currentItem);
             }
         });
 
@@ -103,7 +93,7 @@ public class NasaDataAdapter extends RecyclerView.Adapter<NasaDataAdapter.ViewHo
         return (dataList == null) ? 0 : dataList.size();
     }
 
-    public void setData(List<CollectionItem> passedData){
+    public void setData(ArrayList<NasaObject> passedData){
         this.dataList = passedData;
         notifyDataSetChanged();
     }

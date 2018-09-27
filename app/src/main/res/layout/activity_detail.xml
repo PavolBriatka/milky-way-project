@@ -7,11 +7,13 @@
     tools:context=".views.DetailActivity">
 
     <android.support.design.widget.AppBarLayout
+        android:id="@+id/app_bar_layout"
         android:layout_width="match_parent"
         android:layout_height="@dimen/fixed_image_height"
         app:elevation="@dimen/small_margin">
 
         <android.support.design.widget.CollapsingToolbarLayout
+            android:id="@+id/collapsing_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:collapsedTitleTextAppearance="@style/WhiteText"
@@ -27,6 +29,7 @@
                 android:scaleType="centerCrop" />
 
             <android.support.v7.widget.Toolbar
+                android:id="@+id/detail_toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?actionBarSize"
                 app:contentInsetLeft="0dp"
