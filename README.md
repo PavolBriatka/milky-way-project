@@ -1,5 +1,5 @@
 # milky-way-project
-<p>In this project, I decided to try and implement MVP pattern. I have created specific packages for each of the elements (model, view, presenter). Each package contains files that, in my opinion, belong there and correspond with an element of the <i><b>MVP pattern</b></i>.</p>
+<p>In this project, I decided to try and implement MVP pattern. I have created specific packages for each of the elements (model, view, presenter). Each package contains files that, in my opinion, belong there and correspond with an element of the <b>MVP pattern</b>.</p>
 <p>The network request is handled by Retrofit (in combination with Gson converter) which passes the response through a listener to Presenter and from there to Activity (View) where the data is passed to an adapter and UI is populated with the items.</p>
 <p>The list of items is shown in a recycler view which uses a layout manager to handle the UI when the screen is rotated (the portrait mode shows a vertical linear list of items and the landscape mode show the items in a grid view in two columns).</p>
 <p>Passing the correct data and opening the detail activity is handled through a simple recycler view on-click listener which takes the clicked object as a parameter and then it’s attached to an intent as an extra in form of a parcelable object.</p>
